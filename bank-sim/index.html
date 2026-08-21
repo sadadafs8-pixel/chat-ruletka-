@@ -13,7 +13,7 @@
   <div class="lock" id="lockScreen">
     <div class="lock-top"><div class="mini-badge">ID</div></div>
     <div class="lock-center">
-      <h1>Здравствуйте!</h1>
+      <h1 id="lockGreeting">Здравствуйте, Александр!</h1>
       <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i></div>
     </div>
     <div class="keypad" id="keypad">
@@ -31,10 +31,10 @@
           <div class="avatar">А</div>
           <div class="profile-name">Александр <span>›</span></div>
         </button>
-        <button class="gift-btn" data-demo>🎁</button>
+        <button class="gift-btn" data-panel="gifts">🎁</button>
       </section>
 
-      <button class="search-bar" data-demo><span>⌕</span><b>Поиск</b></button>
+      <button class="search-bar" id="searchBtn"><span>⌕</span><b>Поиск</b></button>
 
       <section class="summary-grid">
         <button class="summary-card" id="historyTile">
@@ -51,54 +51,41 @@
 
       <section class="quick-actions">
         <button data-action="transfer"><span>↗</span><b>Перевести<br>по телефону</b></button>
-        <button data-action="topup"><span>＋</span><b>Пополнить<br>счёт</b></button>
+        <button data-action="topup"><span>＋</span><b>Пополнить<br><em id="quickAccountName">Black</em></b></button>
         <button data-action="between"><span>⇄</span><b>Между<br>счетами</b></button>
-        <button data-demo><span>⌗</span><b>Сканировать<br>QR-код</b></button>
+        <button data-action="qr"><span>⌗</span><b>Сканировать<br>QR-код</b></button>
       </section>
 
-      <section class="account-card" id="accountCard">
+      <button class="account-card" id="accountCard">
         <div class="account-icon">₽</div>
         <div class="account-main">
           <div class="account-title"><strong id="balanceText">13,84 ₽</strong><span>0 ₽</span></div>
-          <p>Black</p>
-          <div class="mini-card"><span>••••</span><b>8310</b></div>
-          <button class="topup-wide" data-action="topup"><span>＋</span> Пополнить из другого банка <b>›</b></button>
+          <p id="accountName">Black</p>
+          <div class="mini-card"><span>••••</span><b id="cardLast4">8310</b></div>
+          <div class="topup-wide" data-action="topup"><span>＋</span> Пополнить из другого банка <b>›</b></div>
         </div>
-      </section>
+      </button>
 
       <section class="promo-card">
         <div><h3>Удвоим<br>ваши пожертвования</h3><p>Поддержите благотворительные проекты</p></div>
-        <button data-demo>×</button>
+        <button id="closePromo">×</button>
         <div class="promo-art"><span>×2</span></div>
       </section>
 
-      <section class="goal-card">
-        <div class="goal-icon">◢</div>
-        <div><strong>0,96 из 200 000 ₽</strong><p>SURON ULTRA BEE</p></div>
-        <span class="goal-plus">+58,97 ₽</span>
-      </section>
-      <section class="goal-card">
-        <div class="goal-icon">◢</div>
-        <div><strong>0,33 из 500 000 ₽</strong><p>чиста кайф</p></div>
-        <span class="goal-user">●</span>
-      </section>
-      <section class="goal-card gift-goal">
-        <div class="goal-icon gift">🎁</div>
-        <div><strong>0 из 1 000 000 ₽</strong><p>Сбор на подарок</p></div>
-      </section>
+      <div id="goalList"></div>
 
       <section class="product-grid">
-        <button class="product-card tall" data-demo><h3>Копить</h3><div class="safe-art">↑</div></button>
-        <button class="product-card" data-demo><h3>Инвести-<br>ции от 10 ₽</h3><div class="bars-art"><i></i><i></i><i></i><i></i></div></button>
-        <button class="product-card" data-demo><h3>Сим-карта</h3><div class="sim-art">▣</div></button>
-        <button class="product-card tall" data-demo><h3>🎧 и 🎬 с кэшб-<br>эком</h3><div class="film-art">◉</div></button>
-        <button class="product-card yellow" data-demo><h3>Все про-<br>дукты</h3><div class="bag-art">▱</div></button>
+        <button class="product-card tall" data-panel="save"><h3>Копить</h3><div class="safe-art">↑</div></button>
+        <button class="product-card" data-panel="invest"><h3>Инвести-<br>ции от 10 ₽</h3><div class="bars-art"><i></i><i></i><i></i><i></i></div></button>
+        <button class="product-card" data-panel="sim"><h3>Сим-карта</h3><div class="sim-art">▣</div></button>
+        <button class="product-card tall" data-panel="entertainment"><h3>🎧 и 🎬 с кэшб-<br>эком</h3><div class="film-art">◉</div></button>
+        <button class="product-card yellow" data-panel="products"><h3>Все про-<br>дукты</h3><div class="bag-art">▱</div></button>
       </section>
 
       <h2 class="home-auto-title">Дом и авто</h2>
       <section class="home-auto-grid">
-        <button class="home-card" data-demo><span>＋ Дом</span><div class="house-art">⌂</div></button>
-        <button class="home-card" data-demo><span>＋ Авто</span><div class="car-art">▰</div></button>
+        <button class="home-card" data-panel="home"><span>＋ Дом</span><div class="house-art">⌂</div></button>
+        <button class="home-card" data-panel="car"><span>＋ Авто</span><div class="car-art">▰</div></button>
       </section>
     </main>
 
@@ -106,32 +93,34 @@
       <header class="page-head"><h1>Платежи</h1><p>Быстрые действия</p></header>
       <section class="list-card">
         <button data-action="transfer"><span>↗</span><div><b>Перевести</b><small>По номеру телефона</small></div><em>›</em></button>
-        <button data-action="topup"><span>＋</span><div><b>Пополнить</b><small>Изменить внутренний баланс</small></div><em>›</em></button>
-        <button data-demo><span>⌗</span><div><b>По QR-коду</b><small>Демо-раздел</small></div><em>›</em></button>
-        <button data-demo><span>▦</span><div><b>Услуги</b><small>Связь, интернет, ЖКХ</small></div><em>›</em></button>
+        <button data-action="topup"><span>＋</span><div><b>Пополнить</b><small>Основной счёт</small></div><em>›</em></button>
+        <button data-action="between"><span>⇄</span><div><b>Между счетами</b><small>Основной и накопительные</small></div><em>›</em></button>
+        <button data-action="qr"><span>⌗</span><div><b>По QR-коду</b><small>Локальный экран симулятора</small></div><em>›</em></button>
+        <button data-panel="services"><span>▦</span><div><b>Услуги</b><small>Связь, интернет, ЖКХ</small></div><em>›</em></button>
       </section>
     </main>
 
     <main class="screen" id="screenCity">
       <header class="page-head"><h1>Город</h1><p>Сервисы рядом</p></header>
       <section class="city-grid">
-        <button data-demo><span>☕</span><b>Кафе</b></button><button data-demo><span>🎬</span><b>Кино</b></button>
-        <button data-demo><span>🚕</span><b>Такси</b></button><button data-demo><span>🛍</span><b>Покупки</b></button>
+        <button data-panel="cafe"><span>☕</span><b>Кафе</b></button><button data-panel="cinema"><span>🎬</span><b>Кино</b></button>
+        <button data-panel="taxi"><span>🚕</span><b>Такси</b></button><button data-panel="shopping"><span>🛍</span><b>Покупки</b></button>
       </section>
     </main>
 
     <main class="screen" id="screenChat">
       <header class="page-head"><h1>Чат</h1><p>Сообщения</p></header>
-      <section class="chat-card"><div class="chat-avatar">●</div><div><b>Поддержка</b><p>Чем можем помочь?</p></div></section>
+      <button class="chat-card" id="supportChat"><div class="chat-avatar">●</div><div><b>Поддержка</b><p>Чем можем помочь?</p></div><span>›</span></button>
     </main>
 
     <main class="screen" id="screenMore">
       <header class="page-head"><h1>Витрина</h1><p>Настройки интерфейса</p></header>
       <section class="list-card">
-        <button id="editBalance"><span>₽</span><div><b>Изменить баланс</b><small>Только на этом устройстве</small></div><em>›</em></button>
+        <button id="editAccount"><span>₽</span><div><b>Основной счёт</b><small>Название, баланс и последние цифры</small></div><em>›</em></button>
+        <button id="manageGoals"><span>◢</span><div><b>Накопительные счета</b><small>Названия, суммы и цели</small></div><em>›</em></button>
         <button id="resetData"><span>↻</span><div><b>Сбросить данные</b><small>Вернуть исходные значения</small></div><em>›</em></button>
       </section>
-      <p class="sim-note">Интерфейс работает локально. Реальные банковские счета, карты и платёжные системы не подключены.</p>
+      <p class="sim-note">Локальный симулятор: реальные банковские счета, карты, чеки и платёжные системы не подключены.</p>
     </main>
 
     <nav class="bottom-nav">
