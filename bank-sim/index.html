@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f3d447" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>ТБ Финанс</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">ТБ</div>
+        <div>
+          <div class="brand-name">ТБ Финанс</div>
+          <div class="brand-sub">мои финансы</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="notifyBtn" aria-label="Уведомления">◉<span class="dot" id="notifyDot"></span></button>
+        <button class="avatar-btn" id="profileBtn" aria-label="Профиль">С</button>
+      </div>
+    </header>
+
+    <main id="screenHome" class="screen active">
+      <section class="balance-card">
+        <div class="eyebrow">На всех счетах</div>
+        <div class="balance" id="balanceText">742 033,37 ₽</div>
+        <div class="balance-meta"><span>Доступно сейчас</span><strong id="availableText">742 033 ₽</strong></div>
+        <div class="balance-actions">
+          <button class="primary" id="topupBtn">Пополнить</button>
+          <button class="secondary" id="transferBtn">Перевести</button>
+        </div>
+      </section>
+
+      <section class="bank-card-wrap" id="cardWrap">
+        <div class="bank-card" id="bankCard">
+          <div class="card-glow"></div>
+          <div class="card-row">
+            <div>
+              <span class="card-brand">ТБ ФИНАНС</span>
+              <div class="card-kind">Black • Debit</div>
+            </div>
+            <span class="card-chip">▦</span>
+          </div>
+          <div class="card-number">•••• 4821</div>
+          <div class="card-footer">
+            <div><span class="muted">Баланс карты</span><br><strong id="cardBalance">742 033 ₽</strong></div>
+            <div class="network">TB+</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-grid">
+        <button class="quick" data-action="mobile"><span>📱</span><b>Связь</b></button>
+        <button class="quick" data-action="qr"><span>⌁</span><b>QR</b></button>
+        <button class="quick" data-action="cashback"><span>%</span><b>Кэшбэк</b></button>
+        <button class="quick" data-action="more"><span>⋯</span><b>Ещё</b></button>
+      </section>
+
+      <section class="insight-card">
+        <div class="section-head compact">
+          <div><div class="eyebrow">Расходы в августе</div><div class="insight-total" id="monthSpend">0 ₽</div></div>
+          <button class="pill" id="analyticsBtn">Аналитика</button>
+        </div>
+        <div class="bars" id="miniBars"></div>
+      </section>
+
+      <section class="cashback-card">
+        <div>
+          <div class="eyebrow">Кэшбэк за август</div>
+          <div class="cashback-value" id="cashbackValue">1 280 ₽</div>
+          <div class="cashback-sub">Начислим 1 сентября</div>
+        </div>
+        <div class="cashback-badge">%</div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Последние операции</h2>
+          <button class="link-btn" id="addTxBtn">Добавить</button>
+        </div>
+        <div class="tx-list" id="txList"></div>
+      </section>
+    </main>
+
+    <main id="screenPayments" class="screen">
+      <section class="page-head"><h1>Платежи</h1><p>Быстрые действия внутри симулятора</p></section>
+      <section class="action-list">
+        <button class="action-row" id="payTransfer"><span class="action-icon">↗</span><div><b>Перевести</b><small>Другому человеку</small></div><span class="chev">›</span></button>
+        <button class="action-row" id="payTopup"><span class="action-icon">＋</span><div><b>Пополнить</b><small>Изменить внутренний баланс</small></div><span class="chev">›</span></button>
+        <button class="action-row" data-demo><span class="action-icon">📱</span><div><b>Мобильная связь</b><small>Демо-раздел</small></div><span class="chev">›</span></button>
+        <button class="action-row" data-demo><span class="action-icon">⌁</span><div><b>Оплата по QR</b><small>Демо-раздел</small></div><span class="chev">›</span></button>
+        <button class="action-row" data-demo><span class="action-icon">⌂</span><div><b>ЖКХ и услуги</b><small>Демо-раздел</small></div><span class="chev">›</span></button>
+      </section>
+    </main>
+
+    <main id="screenHistory" class="screen">
+      <section class="page-head"><h1>История</h1><p>Операции этого устройства</p></section>
+      <section class="history-summary">
+        <div><span>Поступления</span><strong class="plus" id="incomeText">0 ₽</strong></div>
+        <div><span>Расходы</span><strong id="expenseText">0 ₽</strong></div>
+      </section>
+      <section class="category-card">
+        <h3>Категории расходов</h3>
+        <div id="categoryList"></div>
+      </section>
+      <section class="section"><div class="section-head"><h2>Все операции</h2></div><div class="tx-list" id="historyList"></div></section>
+    </main>
+
+    <main id="screenMore" class="screen">
+      <section class="page-head"><h1>Ещё</h1><p>Настройки и возможности</p></section>
+      <section class="profile-card">
+        <div class="big-avatar">С</div>
+        <div><b>Сергей</b><span>Профиль симулятора</span></div>
+      </section>
+      <section class="action-list">
+        <button class="action-row" id="settingsBalance"><span class="action-icon">₽</span><div><b>Изменить баланс</b><small>Только на этом устройстве</small></div><span class="chev">›</span></button>
+        <button class="action-row" id="settingsNotif"><span class="action-icon">◉</span><div><b>Уведомления</b><small>Посмотреть демо-сообщения</small></div><span class="chev">›</span></button>
+        <button class="action-row" id="settingsReset"><span class="action-icon">↻</span><div><b>Сбросить данные</b><small>Вернуть исходное состояние</small></div><span class="chev">›</span></button>
+      </section>
+      <div class="footer-note">ТБ Финанс — вымышленный интерфейс. Реальные счета, карты и платёжные системы не подключены.</div>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-screen="Home"><span>⌂</span><small>Главная</small></button>
+      <button class="nav-item" data-screen="Payments"><span>◫</span><small>Платежи</small></button>
+      <button class="nav-item" data-screen="History"><span>◎</span><small>История</small></button>
+      <button class="nav-item" data-screen="More"><span>⚙</span><small>Ещё</small></button>
+    </nav>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="grabber"></div>
+    <div id="sheetContent"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
