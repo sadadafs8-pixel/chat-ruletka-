@@ -1,0 +1,14 @@
+name: Wake ASH bot
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake ASH bot service
+        run: |
+          curl -fsS --retry 8 --retry-delay 5 --max-time 120 https://ash-styling22-bot.onrender.com/health
