@@ -78,3 +78,12 @@ qa=function(){
 window.qa=qa;
 const qa5=qa();
 if(!qa5.ok)console.warn('CLIENTA QA5 failed',qa5.errors);
+
+/* Load partner cabinet layer last so it can safely replace the old demo cabinet. */
+if(!document.querySelector('script[data-clienta-partner-v2]')){
+  const s=document.createElement('script');
+  s.src='./qa-patch6.js';
+  s.async=false;
+  s.dataset.clientaPartnerV2='1';
+  document.head.appendChild(s);
+}
