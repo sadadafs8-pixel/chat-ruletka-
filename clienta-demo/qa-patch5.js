@@ -22,6 +22,32 @@ openBooking=function(p){
 };
 window.openBooking=openBooking;
 
+/* Header hierarchy: primary Create action first, smaller Earn action on the far right. */
+(function applyHeaderActionHierarchy(){
+  const create=document.getElementById('newBtn');
+  const earn=document.getElementById('partnerBtn');
+  const nav=create?.closest('.nav');
+  if(nav&&create&&earn)nav.insertBefore(create,earn);
+  if(!document.getElementById('clienta-header-action-style')){
+    const style=document.createElement('style');
+    style.id='clienta-header-action-style';
+    style.textContent=`
+      .nav #newBtn{min-height:48px;padding:0 19px;font-size:16px;white-space:nowrap}
+      .nav #partnerBtn{min-height:40px;padding:0 13px;font-size:14px;white-space:nowrap}
+      @media(max-width:430px){
+        .nav{gap:6px}
+        .nav #newBtn{min-height:46px;padding:0 15px;font-size:14px}
+        .nav #partnerBtn{min-height:38px;padding:0 10px;font-size:12px}
+      }
+      @media(max-width:370px){
+        .nav #newBtn{padding:0 12px;font-size:13px}
+        .nav #partnerBtn{padding:0 9px;font-size:11px}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+})();
+
 const _qaQa5=qa;
 qa=function(){
   const r=_qaQa5(),errors=[...r.errors];
@@ -36,7 +62,17 @@ qa=function(){
   }finally{
     openSheet=originalOpenSheet;
   }
-  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25j',serviceBookingGuard:true};
+  const nav=document.querySelector('.nav');
+  const create=document.getElementById('newBtn');
+  const earn=document.getElementById('partnerBtn');
+  if(nav&&create&&earn){
+    const children=[...nav.children];
+    if(children.indexOf(create)>children.indexOf(earn))errors.push('header-action-order');
+    const createMin=parseFloat(getComputedStyle(create).minHeight)||0;
+    const earnMin=parseFloat(getComputedStyle(earn).minHeight)||0;
+    if(!(createMin>earnMin))errors.push('header-action-size-hierarchy');
+  }
+  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25k',serviceBookingGuard:true,headerActionHierarchy:true};
   return window.CLIENTA_QA;
 };
 window.qa=qa;
