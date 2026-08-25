@@ -31,17 +31,19 @@ renderReview=function(){
   const contact=String(p.contact||'').trim();
   const contactReady=/(@[\w.]{3,}|\+?\d[\d\s()\-]{6,}|https?:\/\/|t\.me\/|wa\.me\/|\S+@\S+\.\S+)/i.test(contact);
   const servicesReady=Array.isArray(p.services)&&p.services.some(s=>String(s?.[0]||'').trim()&&String(s?.[2]||'').trim());
+  const clientReady=clientCount(p)>0;
   const missing=[];
   if(!servicesReady)missing.push('услуги и цены');
   if(String(p.schedule||'').trim().length<4)missing.push('график');
   if(!contactReady)missing.push('реальный контакт');
+  if(!clientReady)missing.push('хотя бы одну функцию для клиента');
   if(!p.channels.length)missing.push('канал запуска');
   const card=document.createElement('article');
   card.className='reviewCard';
   card.style.gridColumn='1 / -1';
   card.innerHTML=missing.length
     ?`<h3>Перед запуском</h3><p style="color:#777;line-height:1.5;margin:0">Можно сохранить демо, но для реального запуска ещё нужно заполнить: <b>${esc(missing.join(', '))}</b>.</p>`
-    :'<h3>Готовность к запуску ✓</h3><p style="color:#777;line-height:1.5;margin:0">Услуги, график, контакт и канал заполнены. На следующем экране их можно ещё раз проверить.</p>';
+    :'<h3>Готовность к запуску ✓</h3><p style="color:#777;line-height:1.5;margin:0">Услуги, график, контакт, клиентские функции и канал заполнены. На следующем экране их можно ещё раз проверить.</p>';
   $('review')?.prepend(card);
 };
 window.renderReview=renderReview;
@@ -56,6 +58,8 @@ qa=function(){
   const restaurant=normalizeProject({name:'QA restaurant',biz:'Ресторан',bizCat:'Еда',pack:'max',mods:[...PACKS.max],services:BUSINESS_PRESETS['Ресторан'].services,schedule:'12:00–23:00',contact:'@rest',channels:['Web']});
   const restaurantHtml=clientMarkup(restaurant,false);
   if(!restaurantHtml.includes('Забронировать стол · предоплата'))errors.push('prepay-niche-cta');
+  const ownerOnly=normalizeProject({name:'Owner only',biz:'IT-студия',bizCat:'Услуги',pack:'custom',mods:['CRM и клиенты','Аналитика'],services:[['Консультация','45 минут','2 500 ₽']],schedule:'10:00–19:00',contact:'@owner',channels:['Web']});
+  if(clientCount(ownerOnly)!==0)errors.push('owner-only-client-count');
   const channelInputs=[...document.querySelectorAll('[data-channel]')];
   if(channelInputs.length){
     const old=[...st.channels];
@@ -67,7 +71,7 @@ qa=function(){
     channelInputs.forEach(x=>x.checked=old.includes(x.value));
     syncPreview();
   }
-  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25f'};
+  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25g'};
   return window.CLIENTA_QA;
 };
 window.qa=qa;
