@@ -8,6 +8,9 @@ clientMarkup=function(input,interactive=true){
     const kicker=contact?'Связаться с бизнесом':'Контакт ещё не указан';
     const title=contact?'Напишите нам':'Добавьте контакт';
     html=html.replace(/(<section class="publicHero"><small>)[\s\S]*?(<\/small><h1>)[\s\S]*?(<\/h1>)/,`$1${esc(kicker)}$2${esc(title)}$3`);
+  }else if(p.mods.includes('Предоплата')){
+    const cta=`${businessPreset(p.biz,p.bizCat).cta} · предоплата`;
+    html=html.replace(/(<button class="publicBtn" data-act="booking">)[\s\S]*?(<\/button>)/,`$1${esc(cta)}$2`);
   }
   return html;
 };
@@ -50,6 +53,9 @@ qa=function(){
   const html=clientMarkup(noBooking,false);
   if(html.includes('Ближайшее свободное окно')||html.includes('Сегодня 16:30'))errors.push('no-booking-hero-copy');
   if(!html.includes('Связаться с бизнесом')||!html.includes('Напишите нам'))errors.push('no-booking-contact-hero');
+  const restaurant=normalizeProject({name:'QA restaurant',biz:'Ресторан',bizCat:'Еда',pack:'max',mods:[...PACKS.max],services:BUSINESS_PRESETS['Ресторан'].services,schedule:'12:00–23:00',contact:'@rest',channels:['Web']});
+  const restaurantHtml=clientMarkup(restaurant,false);
+  if(!restaurantHtml.includes('Забронировать стол · предоплата'))errors.push('prepay-niche-cta');
   const channelInputs=[...document.querySelectorAll('[data-channel]')];
   if(channelInputs.length){
     const old=[...st.channels];
@@ -61,7 +67,7 @@ qa=function(){
     channelInputs.forEach(x=>x.checked=old.includes(x.value));
     syncPreview();
   }
-  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25e'};
+  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25f'};
   return window.CLIENTA_QA;
 };
 window.qa=qa;
