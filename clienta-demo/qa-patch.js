@@ -2,11 +2,19 @@
 const _normalizeProject=normalizeProject;
 normalizeProject=function(p={}){
   const q=_normalizeProject(p);
+  const declaredPack=['start','growth','max'].includes(p.pack)?p.pack:null;
+  if(declaredPack){
+    q.mods=[...PACKS[declaredPack]];
+    q.pack=declaredPack;
+  }
   const bookingDeps=['Повторная запись','Лист ожидания','Предоплата'];
   if(bookingDeps.some(x=>q.mods.includes(x))&&!q.mods.includes('Онлайн-запись'))q.mods.unshift('Онлайн-запись');
   if(Object.prototype.hasOwnProperty.call(p,'contact')&&!String(p.contact||'').trim())q.contact='';
   if(Object.prototype.hasOwnProperty.call(p,'channels')&&Array.isArray(p.channels)&&p.channels.length===0)q.channels=[];
-  q.pack=planOf(q);
+  if(!declaredPack){
+    const mods=new Set(q.mods);
+    q.pack=PACKS.max.every(x=>mods.has(x))?'max':PACKS.growth.every(x=>mods.has(x))?'growth':PACKS.start.every(x=>mods.has(x))?'start':'custom';
+  }
   return q;
 };
 window.normalizeProject=normalizeProject;
@@ -15,9 +23,7 @@ const _snapshot=snapshot;
 snapshot=function(){
   const q=_snapshot();
   const channelInputs=[...document.querySelectorAll('[data-channel]')];
-  if(channelInputs.length){
-    q.channels=channelInputs.filter(x=>x.checked).map(x=>x.value);
-  }
+  if(channelInputs.length)q.channels=channelInputs.filter(x=>x.checked).map(x=>x.value);
   return normalizeProject(q);
 };
 
@@ -53,7 +59,6 @@ openService=function(p,i){
   $('sheetPanel').querySelector('[data-contact]')?.addEventListener('click',()=>openFeature(p,'contact'));
 };
 
-/* Make booking dependencies explicit instead of silently producing contradictory projects. */
 document.addEventListener('change',e=>{
   const input=e.target.closest?.('[data-mi]');
   if(!input)return;
@@ -98,7 +103,6 @@ renderLaunch=function(){
   $('launchGrid').querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>{closeSuccess();startBuilder(current);go(Number(b.dataset.step))}));
 };
 
-/* The base app boots before this patch. Re-render public links once so they use the hardened renderer too. */
 (function rerenderPublicAfterPatch(){
   const raw=new URLSearchParams(location.search).get('client');
   if(!raw)return;
@@ -118,12 +122,13 @@ qa=function(){
   if(emptyContact.contact!=='')errors.push('empty-contact-fallback');
   const emptyChannels=normalizeProject({...noBooking,channels:[]});
   if(emptyChannels.channels.length!==0)errors.push('empty-channels-fallback');
-  const max=normalizeProject({...noBooking,pack:'max',mods:[...PACKS.max]});
-  const maxHtml=clientMarkup(max,false);
+  const staleMax=normalizeProject({...noBooking,pack:'max',mods:['Онлайн-запись']});
+  if(!PACKS.max.every(x=>staleMax.mods.includes(x)))errors.push('stale-max-hydration');
+  const maxHtml=clientMarkup(staleMax,false);
   for(const token of ['340','4 / 8','4.9','Повторить','Лист ожидания','Сертификат','AI-ассистент','с предоплатой']){
     if(!maxHtml.includes(token))errors.push('max-token:'+token);
   }
-  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25b'};
+  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25c'};
   return window.CLIENTA_QA;
 };
 window.qa=qa;
