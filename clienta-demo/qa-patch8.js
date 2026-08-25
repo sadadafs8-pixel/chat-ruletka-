@@ -11,6 +11,16 @@
       body.keyboard .head{display:block!important}
       body.keyboard .body{padding-bottom:96px!important}
       body.keyboard .footer{display:none!important}
+      body.clientaKeyboardOpen #mobilePreviewBtn,
+      body.keyboard #mobilePreviewBtn{
+        opacity:0!important;
+        visibility:hidden!important;
+        pointer-events:none!important;
+        transform:translateY(12px)!important;
+      }
+      #mobilePreviewBtn{
+        transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
+      }
       body.clientaKeyboardOpen #builder.full.on{
         top:var(--clienta-vv-top,0px)!important;
         bottom:auto!important;
@@ -95,7 +105,8 @@ qa=function(){
   if(!style)errors.push('iphone-keyboard-style');
   if(style&&/body\.keyboard \.head\{display:none/i.test(style.textContent))errors.push('iphone-keyboard-head-hidden');
   if(!style?.textContent.includes('--clienta-vv-height'))errors.push('iphone-visual-viewport-height');
-  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25n',iphoneKeyboardStable:true};
+  if(!style?.textContent.includes('#mobilePreviewBtn'))errors.push('iphone-keyboard-preview-overlap');
+  window.CLIENTA_QA={...r,ok:errors.length===0,errors,patch:'2026-08-25o',iphoneKeyboardStable:true,hidePreviewWhileTyping:true};
   return window.CLIENTA_QA;
 };
 window.qa=qa;
