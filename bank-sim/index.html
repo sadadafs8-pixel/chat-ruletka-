@@ -8,6 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Финансы</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="enhancements.css" />
 </head>
 <body>
   <div class="lock" id="lockScreen">
@@ -95,7 +96,7 @@
         <button data-action="transfer"><span>↗</span><div><b>Перевести</b><small>По номеру телефона</small></div><em>›</em></button>
         <button data-action="topup"><span>＋</span><div><b>Пополнить</b><small>Основной счёт</small></div><em>›</em></button>
         <button data-action="between"><span>⇄</span><div><b>Между счетами</b><small>Основной и накопительные</small></div><em>›</em></button>
-        <button data-action="qr"><span>⌗</span><div><b>По QR-коду</b><small>Локальный экран симулятора</small></div><em>›</em></button>
+        <button data-action="qr"><span>⌗</span><div><b>По QR-коду</b><small>Камера и платежная ссылка</small></div><em>›</em></button>
         <button data-panel="services"><span>▦</span><div><b>Услуги</b><small>Связь, интернет, ЖКХ</small></div><em>›</em></button>
       </section>
     </main>
@@ -120,7 +121,7 @@
         <button id="manageGoals"><span>◢</span><div><b>Накопительные счета</b><small>Названия, суммы и цели</small></div><em>›</em></button>
         <button id="resetData"><span>↻</span><div><b>Сбросить данные</b><small>Вернуть исходные значения</small></div><em>›</em></button>
       </section>
-      <p class="sim-note">Локальный симулятор: реальные банковские счета, карты, чеки и платёжные системы не подключены.</p>
+      <p class="sim-note">Демо-интерфейс: реальные банковские счета и карты не подключены.</p>
     </main>
 
     <nav class="bottom-nav">
@@ -136,6 +137,6 @@
   <div class="sheet" id="sheet" aria-hidden="true"><div class="grabber"></div><div id="sheetContent"></div></div>
   <div class="toast" id="toast"></div>
   <script src="app.js"></script>
-  <script src="transfer-ui.js"></script>
+  <script src="enhancements.js"></script>
 </body>
 </html>
